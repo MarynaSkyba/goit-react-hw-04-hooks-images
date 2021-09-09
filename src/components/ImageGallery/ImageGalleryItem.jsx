@@ -1,11 +1,10 @@
-import React from "react";
 
-const ImageGalleryItem = () => {
-    
-<li className="ImageGalleryItem">
-  <img src="" alt="" className="ImageGalleryItem-image" />
+export default function ImageGalleryItem ({image}) {
+
+    return (
+    <li className="ImageGalleryItem" key={image.id}>
+  <img src={image.webformatURL} alt={image.tags} className="ImageGalleryItem-image" />
 </li>
-
+)
 }
 
-export default ImageGalleryItem;
