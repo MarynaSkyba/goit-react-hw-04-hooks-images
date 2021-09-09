@@ -1,9 +1,10 @@
 
 export default function ImageGalleryItem ({image}) {
+    const {id,webformatURL, tags} = image;
 
     return (
-    <li className="ImageGalleryItem" key={image.id}>
-  <img src={image.webformatURL} alt={image.tags} className="ImageGalleryItem-image" />
+    <li className="ImageGalleryItem" key={id}>
+  <img src={webformatURL} alt={tags} className="ImageGalleryItem-image" />
 </li>
 )
 }

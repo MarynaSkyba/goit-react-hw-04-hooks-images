@@ -4,10 +4,11 @@ const ImageGallery = ({images}) =>  {
    console.log(images)
     return (
         <ul className="ImageGallery">
-            {images.map(image => (
+            {images.map(image=> (
                 // <li>  <img src={webformatURL} alt={tags} className="ImageGalleryItem-image" />
                 // </li>
-                <ImageGalleryItem  image={image}/>
+                // <ImageGalleryItem  id={id} src={webformatURL} alt={tags}/>
+                <ImageGalleryItem image={image}/>
             ))}  
            </ul>)}
             
