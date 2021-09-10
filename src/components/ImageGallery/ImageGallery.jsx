@@ -1,6 +1,7 @@
 import ImageGalleryItem from '../ImageGallery/ImageGalleryItem';
 
 const ImageGallery = ({images, onSelect}) =>  {
+    console.log('gallery')
     return (
         <ul className="ImageGallery">
             {images.map(image => (

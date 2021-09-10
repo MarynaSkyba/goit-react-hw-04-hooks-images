@@ -1,10 +1,10 @@
 
-export default function ImageGalleryItem ({image, onSelect}) {
+export default function ImageGalleryItem ({image, onClick}) {
     const {id,webformatURL, tags} = image;
-console.log('item:', onSelect)
+console.log('item:', onClick)
     return (
-    <li className="ImageGalleryItem" key={id}>
-  <img src={webformatURL} alt={tags}  onClick={onSelect} className="ImageGalleryItem-image" />
+    <li className="ImageGalleryItem" onClick={onClick} key={id}>
+  <img src={webformatURL} alt={tags}  className="ImageGalleryItem-image" />
 </li>
 )
 }

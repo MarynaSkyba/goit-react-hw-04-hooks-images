@@ -1,6 +1,6 @@
 
 
-export default function Modal ({children, onSelect}){
+export default function Modal ({src,alt, onSelect}){
     const handleBackdropClick = (e) => {
         if (e.currentTarget === e.target) {
             onSelect();
@@ -10,8 +10,7 @@ export default function Modal ({children, onSelect}){
     return (
         <div className="Overlay" onClick={handleBackdropClick}>
   <div className="Modal">
-      {children}
-    {/* <img src={src} alt="" /> */}
+    <img src={src} alt={alt} />
   </div>
 </div>
     )

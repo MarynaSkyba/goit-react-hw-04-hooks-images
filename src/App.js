@@ -71,9 +71,7 @@ render(){
       <ImageGallery images = {images} onSelect={this.handleSelectedImage}/>
       <Button  onClick={this.handleButtonLoadMore}/>
      {/* <Modal scr={selectedImage.largeImageURL} alt={selectedImage.tags}/> */}
-    {showModal && <Modal onSelect={this.handleSelectedImage}>
-    <img src={selectedImage} />
-    </Modal>}
+    {showModal && <Modal src={selectedImage.largeImageURL} alt={selectedImage.tags} onSelect={this.handleSelectedImage} />}
       <Toaster />
     </div>
   )
