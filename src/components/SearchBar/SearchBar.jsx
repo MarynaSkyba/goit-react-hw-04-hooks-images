@@ -2,7 +2,6 @@
 // import { Component } from "react";
 
 const SearchBar = ({ onSubmit }) => {
-   
   const handleSearch = e => {
     e.preventDefault()
     onSubmit(e.target.elements.searchImage.value.toLowerCase())

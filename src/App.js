@@ -6,32 +6,37 @@ import SearchBar from './components/SearchBar/SearchBar';
 import {fetchImages} from './services/api'
 import ImageGallery from './components/ImageGallery/ImageGallery';
 import Button from './components/Button/Button';
+import Modal from './components/Modal/Modal';
 
 export default class App extends Component {
   state = {
+    selectedImage: null,
     searchImage: null,
     images: [],
     page: 1,
     error: null,
     status: 'idle',
+    showModal: false,
   };
   
+
+
 
   async componentDidUpdate (prevProps, prevState) {
 const {searchImage, page} = this.state;
 
         if (prevState.searchImage !== searchImage || prevState.page !== page){        
          try{
-          this.setState({status: 'pending', images: []})
-         const images = await fetchImages(searchImage, page)
+          this.setState({status: 'pending'})
+         const gallery = await fetchImages(searchImage, page)
          
          this.setState({status: 'resolved'})
 
-         if(searchImage.trim() ==='' || images.length === 0) {
+         if(searchImage.trim() ==='' || gallery.length === 0) {
                       return toast.error(`нет картинки с именем  ${searchImage}`)
                   }
 
-         this.setState(prev => ({images: [...prev.images, ...images]}));
+         this.setState({images: [...this.state.images, ...gallery]});
          
          }
          catch(error){
@@ -45,19 +50,30 @@ const {searchImage, page} = this.state;
     this.setState({searchImage});
   };
 
+
   handleButtonLoadMore = () => {
     this.setState(p => ({page: p.page + 1}));
     }
   
+    handleSelectedImage =(imageURL) => {
+      this.setState((prevState) => ({
+        showModal: !prevState.showModal,
+        selectedImage: imageURL,
+      }))}
 
 render(){
-  const {images, status} = this.state;
+  const {images, status, showModal, selectedImage} = this.state;
+  
   return ( 
     <div>
       <SearchBar onSubmit={this.handleFormSubmit} />
       {status === 'pending' && <Spinner />}
-      <ImageGallery images = {images}/>
+      <ImageGallery images = {images} onSelect={this.handleSelectedImage}/>
       <Button  onClick={this.handleButtonLoadMore}/>
+     {/* <Modal scr={selectedImage.largeImageURL} alt={selectedImage.tags}/> */}
+    {showModal && <Modal onSelect={this.handleSelectedImage}>
+    <img src={selectedImage} />
+    </Modal>}
       <Toaster />
     </div>
   )
