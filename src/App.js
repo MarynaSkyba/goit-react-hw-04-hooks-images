@@ -24,14 +24,15 @@ const {searchImage, page} = this.state;
          try{
           this.setState({status: 'pending', images: []})
          const images = await fetchImages(searchImage, page)
-         console.log(images)
+         
          this.setState({status: 'resolved'})
 
          if(searchImage.trim() ==='' || images.length === 0) {
                       return toast.error(`нет картинки с именем  ${searchImage}`)
                   }
 
-         this.setState({images});  
+         this.setState(prev => ({images: [...prev.images, ...images]}));
+         
          }
          catch(error){
           this.setState({status: 'rejected'})
@@ -44,10 +45,8 @@ const {searchImage, page} = this.state;
     this.setState({searchImage});
   };
 
-  handleButtonLoadMore= (e)=> {
-    // e.preventDefault();
+  handleButtonLoadMore = () => {
     this.setState(p => ({page: p.page + 1}));
-    console.log(this.state.page)
     }
   
 
