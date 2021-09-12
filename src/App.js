@@ -37,7 +37,10 @@ const {searchImage, page} = this.state;
                   }
 
          this.setState({images: [...this.state.images, ...gallery]});
-         
+         window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: 'smooth',
+        });
          }
          catch(error){
           this.setState({status: 'rejected'})
@@ -47,7 +50,7 @@ const {searchImage, page} = this.state;
     }
 
   handleFormSubmit = (searchImage) => {
-    this.setState({searchImage});
+    this.setState({searchImage: searchImage, page: 1, images: []});
   };
 
 
@@ -62,15 +65,15 @@ const {searchImage, page} = this.state;
       }))}
 
 render(){
-  const {images, status, showModal, selectedImage} = this.state;
+  const {images, status, showModal, selectedImage, } = this.state;
+  const showButton = images.length >= 1;
   
   return ( 
     <div>
       <SearchBar onSubmit={this.handleFormSubmit} />
       {status === 'pending' && <Spinner />}
       <ImageGallery images = {images} onSelect={this.handleSelectedImage}/>
-      <Button  onClick={this.handleButtonLoadMore}/>
-     {/* <Modal scr={selectedImage.largeImageURL} alt={selectedImage.tags}/> */}
+      {showButton && <Button  onClick={this.handleButtonLoadMore}/>}
     {showModal && <Modal src={selectedImage.largeImageURL} alt={selectedImage.tags} onSelect={this.handleSelectedImage} />}
       <Toaster />
     </div>
@@ -78,51 +81,3 @@ render(){
 }
 
 }
-
-// componentDidUpdate (prevProps, prevState) {
-  //     if(prevProps.searchImage !== this.state.searchImage){
-  //     this.setState({status: 'pending'})
-  //     fetch(`https://pixabay.com/api/?q=${this.state.searchImage}&page=${this.state.page}&key=22578117-98ddcf36fbc3d0da8c48aeee6&image_type=photo&orientation=horizontal&per_page=12`)
-  //     .then(response => {
-  //         if (response.ok){
-  //             return response.json();
-  //         }
-  //         return Promise.reject (
-  //             new Error (`нет картинки с именем  ${this.props.searchImage}`)
-  //     );
-  //     })
-  //     // .then(images => {return images.data.hits})
-  //     .then(images => this.setState({images: data, status: 'resolved'}))
-  //     .catch(error => this.setState({error, status: 'rejected'}))
-  //     }
-  // }
-
-//   handleFormSubmit = searchImage => {
-//     this.setState({searchImage})
-//   }
-
-//   render(){
-//     const {images, error, status} = this.state;
-// const {searchImage} = this.props;
-
-// if(status === 'idle'){
-// return <div>Введите название картинки</div>
-// }
-
-// if(status === 'pending'){
-//     return <div>Загружаю..</div>
-// }
-
-// if(status === 'rejected'){
-//     return <h1>{error.message}</h1>
-// }
-// if (status=== 'resolved'){
-// return (
-//     <div className="App">
-//        <SearchBar onSubmit ={this.handleFormSubmit}/>
-//        <ImageGallery images = {images}/>
-//     </div>
-//   );
-//   // }  
-// }
-// }

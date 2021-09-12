@@ -1,11 +1,16 @@
+import {Li, Img} from './ImageGalleryItem.styled'
+import PropTypes from 'prop-types';
 
 export default function ImageGalleryItem ({image, onClick}) {
     const {id,webformatURL, tags} = image;
-console.log('item:', onClick)
     return (
-    <li className="ImageGalleryItem" onClick={onClick} key={id}>
-  <img src={webformatURL} alt={tags}  className="ImageGalleryItem-image" />
-</li>
+    <Li onClick={onClick} key={id}>
+  <Img src={webformatURL} alt={tags}/>
+</Li>
 )
 }
 
+ImageGalleryItem.propTypes = {
+  image: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
