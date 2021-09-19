@@ -5,7 +5,7 @@ import { SpinnerContainer } from "./Loader.styled";
 export default function Spinner () {
     return (
 <SpinnerContainer>
-    <Loader type="Rings" color="#00BFFF" height={80} width={80} 
+    <Loader type="Rings" color="#00BFFF" height={150} width={150} 
     timeout={3000} 
   />
   </SpinnerContainer>)
