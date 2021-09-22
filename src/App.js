@@ -13,27 +13,28 @@ export default function App() {
   const [searchImage, setSearchImage] = useState(null);
   const [images, setImages] = useState([]);
   const [page, setPage] = useState(1);
-  const [status, setStatus] = useState('idle');
+  const [loader, setLoader] = useState('false');
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     if (!searchImage) return;
-    setStatus('pending');
     async function getFetchImages() {
       try {
+        setLoader('true');
         const gallery = await fetchImages(searchImage, page);
         if (searchImage.trim() === '' || gallery.length === 0) {
           return toast.error(`нет картинки с именем  ${searchImage}`);
         }
         setImages(prevImages => [...prevImages, ...gallery]);
-        setStatus('resolved');
+
         window.scrollTo({
           top: document.documentElement.scrollHeight,
           behavior: 'smooth',
         });
       } catch (error) {
-        setStatus('rejected');
         toast.error('что-то пошло не так');
+      } finally {
+        setLoader('false');
       }
     }
     getFetchImages();
@@ -46,7 +47,7 @@ export default function App() {
   };
 
   const handleButtonLoadMore = () => {
-    setPage(p => p + 1);
+    setPage(prevPage => prevPage + 1);
   };
 
   const handleSelectedImage = imageURL => {
@@ -58,7 +59,7 @@ export default function App() {
   return (
     <div>
       <SearchBar onSubmit={handleFormSubmit} />
-      {status === 'pending' && <Spinner />}
+      {loader === 'true' && <Spinner />}
       <ImageGallery images={images} onSelect={handleSelectedImage} />
       {showButton && <Button onClick={handleButtonLoadMore} />}
       {showModal && (
